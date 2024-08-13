@@ -1,0 +1,114 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    // outline: 1px green solid;
+}
+
+html,
+body {
+
+    height: 100vh;
+    width: 100vw;
+
+}
+
+input,input:focus,input:hover{
+    outline: none;
+    border: none;
+    border-radius: 0;
+    
+}
+
+@mixin flex($gap:0,$dir:row,$justify:space-evenly,$align:center){
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+}
+
+#board{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color:white;
+    position: relative;
+
+
+    .pixel{
+        aspect-ratio: 1;
+        position: absolute;
+        left: 0%;top: 0%;
+
+    }
+    .s1{
+        width: 20px;
+    }
+    .s2{
+        width: 10px;
+    }
+    .s3{
+        width: 5px;
+    }
+
+}
+#tools{
+    z-index: 9;
+    position: fixed;
+    top:15px;right: 15px;
+    height: 75px;
+    padding: 0px 20px;
+
+    overflow: hidden;
+    background-color: wheat;
+    border-radius: 10px;
+
+    @include flex($gap:1.5vw);
+    section{
+        @include flex($gap:1vw);
+
+        max-width:100%;
+        max-height:100%;
+
+    }
+
+    .size{
+        div{
+            aspect-ratio: 1;
+            cursor: pointer;
+            background-color: rgb(0, 0, 0,.7);
+            border-radius: 50%;
+            transition: transform .1s;
+            &:hover{
+                transform: scale(1.1);
+            }
+
+            &:nth-child(1){
+                width: 55px;
+                outline-offset: 2px;
+            }
+            &:nth-child(2){
+                width: 40px;
+            }
+            &:nth-child(3){
+                width: 30px;
+            }
+        }
+    }
+    .color{
+        input{
+            cursor: pointer;
+            width: 55px;
+            height: 55px;
+
+        }
+    }
+    .delet {
+        cursor: pointer;
+        i{
+            font-size: 30px;
+            color: purple;
+        }
+    }
+}
