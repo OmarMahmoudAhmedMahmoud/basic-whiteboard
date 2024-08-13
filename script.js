@@ -14,8 +14,8 @@ board.draw = function(e){
     if(!board.desidCheck) return;
     
     
-    let mouseX = e.clientX,
-        mouseY = e.clientY;
+    let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
+        mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
     console.log(board.size);
     
     let pixel = `
@@ -46,6 +46,15 @@ board.events = function(){
         )
 
         board.main.addEventListener("mouseup",()=>board.desidCheck = false
+        )
+
+        board.main.addEventListener("touchstart",()=>board.desidCheck = true
+        )
+        
+        board.main.addEventListener("touchmove",(e)=>board.draw(e)
+        )
+
+        board.main.addEventListener("touchend",()=>board.desidCheck = false
         )
     }
 
