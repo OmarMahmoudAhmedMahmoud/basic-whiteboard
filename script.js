@@ -2,7 +2,7 @@ const board = {
     main : document.getElementById("board"),  
     size : "s2",
     desidCheck : false,
-    // deletCheck : false,
+    deletCheck : false,
     e : null,
     get color(){
         return document.getElementById("T-color").value;
@@ -12,28 +12,28 @@ const board = {
 
 board.draw = function(e){
     if(!board.desidCheck) return;
-    
+    if (board.deletCheck) return;
     
     let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
         mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
-    console.log(board.size);
     
     let pixel = `
     <div class = "pixel ${board.size}" 
         style = "background-color:${board.color};
-                top:${mouseY}px;left:${mouseX}px;">
+                top:${mouseY}px;left:${mouseX}px;"
+        onmouseover="board.remove(this)" ontouchmove="board.remove(this)">
     </div>
     `;
     board.main.innerHTML+=pixel;
 }
 
-board.remove = function(){
-    
+board.remove = function(x){
+    if (!board.desidCheck) return;
+    if (!board.deletCheck) return;
+
+    board.main.removeChild(x)
+
 }
-
-
-
-
 
 
 board.events = function(){
@@ -58,43 +58,43 @@ board.events = function(){
         )
     }
 
-    // function delet() {
+    function delet() {
 
-    //     document.getElementById("icon-rm").addEventListener("click",
-    //         ()=>{
-    //             board.delet = true;
-    //         }
-    //     )
-    // }
+        document.getElementById("icon-rm").addEventListener("click",
+            ()=>{
+                board.deletCheck = true;
+            }
+        )
+    }
 
     function color() {
 
         document.getElementById("T-color").addEventListener("change",
             ()=>{
-                // board.delet = false;
+                board.deletCheck = false;
             }
         )
     }
 
     function size() {
         document.getElementById("s1").addEventListener("click",()=>{
-            // board.delet = false;
+            board.deletCheck = false;
             board.size = "s1";
         })
 
         document.getElementById("s2").addEventListener("click",()=>{
-            // board.delet = false;
+            board.deletCheck = false;
             board.size = "s2";
         })
 
         document.getElementById("s3").addEventListener("click",()=>{
-            // board.delet = false;
+            board.deletCheck = false;
             board.size = "s3";
         })
     }
 
     desid()
-    // delet()
+    delet()
     color()
     size()
 }
