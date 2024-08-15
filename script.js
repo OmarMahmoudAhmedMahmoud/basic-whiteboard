@@ -10,31 +10,57 @@ const board = {
 
 }
 
-board.draw = function(e){
+board.draw = function(e,size){
     if(!board.desidCheck) return;
-    if (board.deletCheck) return;
     
     let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
         mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
-    
-    let pixel = `
-    <div class = "pixel ${board.size}" 
-        style = "background-color:${board.color};
-                top:${mouseY}px;left:${mouseX}px;"
-        onmouseover="board.remove(this)" ontouchmove="board.remove(this)">
-    </div> `;
-    
-    board.main.innerHTML+=pixel;
+
+    board.ctx.fillStyle = board.color;
+    board.ctx.fillRect(mouseX, mouseY, size, size)
 }
 
-board.remove = function(x){
+board.remove = function(e,size){
     if (!board.desidCheck) return;
-    if (!board.deletCheck) return;
 
-    board.main.removeChild(x)
+    let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
+    mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
+    board.ctx.clearRect(mouseX, mouseY, size, size);
 
 }
 
+board.desid = function (e) {
+    let size ;
+    switch (board.size) {
+        case "s1":
+            size = 20
+            break;
+        case "s2":
+            size = 15
+            break;
+        case "s3":
+            size = 10
+            break;
+    }
+    
+    if (this.deletCheck) {
+        board.remove(e,size)
+    }else{
+        board.draw(e,size)
+    }
+}
+
+board.graph = function() {
+    this.canvas = document.getElementById("board");
+    this.ctx = this.canvas.getContext("2d");
+    window.addEventListener('resize', resizeCanvas, false);
+    function resizeCanvas() {
+
+        board.canvas.width = window.innerWidth;
+        board.canvas.height = window.innerHeight;
+    }   
+    resizeCanvas()
+}
 
 board.events = function(){
 
@@ -42,20 +68,25 @@ board.events = function(){
         board.main.addEventListener("mousedown",()=>board.desidCheck = true
         )
         
-        board.main.addEventListener("mousemove",(e)=>board.draw(e)
+        board.main.addEventListener("mousemove",(e)=>board.desid(e)
         )
 
         board.main.addEventListener("mouseup",()=>board.desidCheck = false
         )
 
+        board.main.addEventListener("mouseleave",()=>board.desidCheck = false
+        )
+        
+        // for touch
         board.main.addEventListener("touchstart",()=>board.desidCheck = true
         )
         
-        board.main.addEventListener("touchmove",(e)=>board.draw(e)
+        board.main.addEventListener("touchmove",(e)=>board.desid(e)
         )
 
         board.main.addEventListener("touchend",()=>board.desidCheck = false
         )
+
     }
 
     function delet() {
@@ -63,6 +94,15 @@ board.events = function(){
         document.getElementById("icon-rm").addEventListener("click",
             ()=>{
                 board.deletCheck = true;
+            }
+        )
+    }
+
+    function clear() {
+
+        document.getElementById("icon-cl").addEventListener("click",
+            ()=>{
+                board.ctx.clearRect(0, 0, board.canvas.width, board.canvas.height);
             }
         )
     }
@@ -94,6 +134,7 @@ board.events = function(){
     }
 
     desid()
+    clear()
     delet()
     color()
     size()
@@ -105,7 +146,18 @@ board.events = function(){
 
 board.render = function(){
     this.events();
+    this.graph()
 }
+
+
+
+
+
+
+
+
+
+
 
 document.body.onload = function(){
     document.body.style.display="block";

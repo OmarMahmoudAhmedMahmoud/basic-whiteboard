@@ -128,15 +128,19 @@ input, input:focus, input:hover {
   margin-inline: 5px;
   cursor: pointer;
 }
-#tools .delet i {
-  font-size: 30px;
-  color: rgb(189, 124, 124);
-  transition: transform 0.2s;
-}
 #tools .delet i:hover {
   transform: translateY(-2px);
 }
 #tools .delet::before {
+  content: "eraser";
+}
+#tools .clear {
+  cursor: pointer;
+}
+#tools .clear i:hover {
+  transform: translateY(-2px);
+}
+#tools .clear::before {
   content: "clear";
 }
 
