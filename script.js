@@ -22,8 +22,8 @@ board.draw = function(e){
         style = "background-color:${board.color};
                 top:${mouseY}px;left:${mouseX}px;"
         onmouseover="board.remove(this)" ontouchmove="board.remove(this)">
-    </div>
-    `;
+    </div> `;
+    
     board.main.innerHTML+=pixel;
 }
 
@@ -98,6 +98,9 @@ board.events = function(){
     color()
     size()
 }
+
+
+
 
 
 board.render = function(){

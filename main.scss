@@ -2,7 +2,9 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     // outline: 1px green solid;
+
 }
 
 html,
@@ -21,6 +23,19 @@ input,input:focus,input:hover{
     
 }
 
+%before-hover {
+    display: none;
+    position: absolute;
+    top: 100%;right: 50%;
+    transform: translateY(50%)translateX(50%);
+    margin: auto;
+    font-size: 20px;
+    width:fit-content;height: fit-content;
+    color: rgb(255, 255, 255);
+    background-color: rgb(2, 2, 2);
+    padding: 2px 10px;
+}
+
 @mixin flex($gap:0,$dir:row,$justify:space-evenly,$align:center){
     display: flex;
     flex-direction: $dir;
@@ -28,6 +43,8 @@ input,input:focus,input:hover{
     align-items: $align;
     gap: $gap;
 }
+
+
 
 #board{
     width: 100vw;
@@ -54,46 +71,72 @@ input,input:focus,input:hover{
     }
 
 }
+
+
+
+
+
+
+
 #tools{
     z-index: 9;
     position: fixed;
     top:15px;right: 15px;
     height: 75px;
     padding: 0px 20px;
-
-    overflow: hidden;
     background-color: wheat;
     border-radius: 10px;
 
     @include flex($gap:1.5vw);
     section{
         @include flex($gap:1vw);
-
+        position: relative;
         max-width:100%;
         max-height:100%;
 
+        &::before{
+            @extend %before-hover ;
+        }
+        &:hover:before{
+            display: block;
+        }
     }
-
     .size{
         div{
             aspect-ratio: 1;
             cursor: pointer;
             background-color: rgb(0, 0, 0,.7);
-            border-radius: 50%;
             transition: transform .1s;
             &:hover{
                 transform: scale(1.1);
             }
 
+            &::before{
+                @extend %before-hover ;
+            }
+
+            &:hover:before{
+                display: block;
+            }
+
+
             &:nth-child(1){
-                width: 55px;
-                outline-offset: 2px;
+                width: 45px;
+                &::before{
+                    content: "L";
+                }
             }
             &:nth-child(2){
                 width: 40px;
+                &::before{
+                    content: "M";
+                }
             }
             &:nth-child(3){
-                width: 30px;
+                width: 35px;
+                &::before{
+                    content: "S";
+                }
             }
         }
     }
@@ -102,14 +145,28 @@ input,input:focus,input:hover{
             cursor: pointer;
             width: 55px;
             height: 55px;
+            border-radius: 50%;
+            outline: 3px white solid;
 
+        }
+        &::before{
+            content: "colores";
         }
     }
     .delet {
+        margin-inline:5px ;
         cursor: pointer;
+
         i{
             font-size: 30px;
-            color: purple;
+            color: rgb(189, 124, 124);
+            transition: transform .2s;
+            &:hover{
+                transform: translateY(-2px);
+            }
+        }
+        &::before{
+            content: "clear";
         }
     }
 }
