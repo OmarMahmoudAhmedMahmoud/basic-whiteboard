@@ -1,6 +1,6 @@
 const board = {
     main : document.getElementById("board"),  
-    size : "s2",
+    size : "10",
     desidCheck : false,
     deletCheck : false,
     e : null,
@@ -10,43 +10,42 @@ const board = {
 
 }
 
-board.draw = function(e,size){
+board.draw = function(e){
     if(!board.desidCheck) return;
     
     let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
         mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
 
-    board.ctx.fillStyle = board.color;
-    board.ctx.fillRect(mouseX, mouseY, size, size)
+    // board.ctx.fillStyle = board.color;
+    // board.ctx.fillRect(mouseX, mouseY, board.size, board.size)
+
+    board.ctx.lineWidth = board.size;
+    board.ctx.lineCap = "round";
+    board.ctx.strokeStyle = board.color;
+
+    board.ctx.lineTo(mouseX, mouseY);
+    board.ctx.stroke();
+    board.ctx.beginPath();
+    board.ctx.moveTo(mouseX, mouseY);
 }
 
-board.remove = function(e,size){
+board.remove = function(e){
     if (!board.desidCheck) return;
 
     let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
     mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
-    board.ctx.clearRect(mouseX, mouseY, size, size);
+    board.ctx.clearRect(mouseX, mouseY, board.size, board.size);
 
 }
 
 board.desid = function (e) {
     let size ;
-    switch (board.size) {
-        case "s1":
-            size = 20
-            break;
-        case "s2":
-            size = 15
-            break;
-        case "s3":
-            size = 10
-            break;
-    }
+
     
     if (this.deletCheck) {
-        board.remove(e,size)
+        board.remove(e)
     }else{
-        board.draw(e,size)
+        board.draw(e)
     }
 }
 
@@ -65,8 +64,10 @@ board.graph = function() {
 board.events = function(){
 
     function desid() {
-        board.main.addEventListener("mousedown",()=>board.desidCheck = true
-        )
+        board.main.addEventListener("mousedown",()=>{
+            board.ctx.beginPath();
+            board.desidCheck = true;
+        })
         
         board.main.addEventListener("mousemove",(e)=>board.desid(e)
         )
@@ -78,8 +79,10 @@ board.events = function(){
         )
         
         // for touch
-        board.main.addEventListener("touchstart",()=>board.desidCheck = true
-        )
+        board.main.addEventListener("touchstart",()=>{
+            board.ctx.beginPath();
+            board.desidCheck = true;
+        })
         
         board.main.addEventListener("touchmove",(e)=>board.desid(e)
         )
@@ -117,20 +120,16 @@ board.events = function(){
     }
 
     function size() {
-        document.getElementById("s1").addEventListener("click",()=>{
-            board.deletCheck = false;
-            board.size = "s1";
-        })
 
-        document.getElementById("s2").addEventListener("click",()=>{
+        document.getElementById("input-size").addEventListener("change",()=>{
             board.deletCheck = false;
-            board.size = "s2";
+            board.size = document.getElementById("input-size").value ;
+            document.getElementById("aside-range").innerHTML = document.getElementById("input-size").value;
         })
-
-        document.getElementById("s3").addEventListener("click",()=>{
-            board.deletCheck = false;
-            board.size = "s3";
+        document.getElementById("input-size").addEventListener("input",()=>{
+            document.getElementById("aside-range").innerHTML = document.getElementById("input-size").value;
         })
+    
     }
 
     desid()

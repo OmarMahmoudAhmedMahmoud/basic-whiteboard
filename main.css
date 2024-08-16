@@ -18,7 +18,7 @@ input, input:focus, input:hover {
   border-radius: 0;
 }
 
-#tools .size div::before, #tools section::before {
+#tools .size aside, #tools section::before {
   display: none;
   position: absolute;
   top: 100%;
@@ -58,8 +58,10 @@ input, input:focus, input:hover {
   gap: 1.5vw;
 }
 #tools section {
+  position: relative;
+  height: 90%;
   display: flex;
-  flex-direction: row;
+  flex-direction: colwun;
   justify-content: space-evenly;
   align-items: center;
   gap: 1vw;
@@ -70,35 +72,31 @@ input, input:focus, input:hover {
 #tools section:hover:before {
   display: block;
 }
-#tools .size div {
-  aspect-ratio: 1;
+#tools .size input {
+  width: 100px;
+  background-color: transparent;
+}
+#tools .size input::-moz-range-progress {
+  background-color: #ffffff;
+  height: 8px;
+}
+#tools .size input::-moz-range-track {
+  height: 8px;
+  background-color: #6a6a6a;
+}
+#tools .size input::-moz-range-thumb {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.7);
-  transition: transform 0.1s;
+  background-color: rgb(0, 0, 0);
+  width: 20px;
+  height: 20px;
+  border-radius: 1000%;
+  border: none;
 }
-#tools .size div:hover {
-  transform: scale(1.1);
+#tools .size aside {
+  position: absolute;
 }
-#tools .size div:hover:before {
+#tools .size:hover aside {
   display: block;
-}
-#tools .size div:nth-child(1) {
-  width: 45px;
-}
-#tools .size div:nth-child(1)::before {
-  content: "L";
-}
-#tools .size div:nth-child(2) {
-  width: 40px;
-}
-#tools .size div:nth-child(2)::before {
-  content: "M";
-}
-#tools .size div:nth-child(3) {
-  width: 35px;
-}
-#tools .size div:nth-child(3)::before {
-  content: "S";
 }
 #tools .color input {
   cursor: pointer;
