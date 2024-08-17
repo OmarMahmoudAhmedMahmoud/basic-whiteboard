@@ -105,6 +105,14 @@ input, input:focus, input:hover {
   border-radius: 50%;
   outline: 3px white solid;
 }
+#tools .color input::-moz-color-swatch {
+  border-radius: 50%;
+  border: 1px solid #000000;
+}
+#tools .color input::-webkit-color-swatch {
+  border-radius: 50%;
+  border: 1px solid #000000;
+}
 #tools .color::before {
   content: "colores";
 }
@@ -126,6 +134,21 @@ input, input:focus, input:hover {
 }
 #tools .clear::before {
   content: "clear";
+}
+#tools .print {
+  cursor: pointer;
+}
+#tools .print:hover {
+  transform: translateY(-2px);
+}
+#tools .print::before {
+  content: "print";
+}
+
+@media print {
+  #tools {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

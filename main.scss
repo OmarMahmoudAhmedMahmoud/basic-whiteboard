@@ -112,6 +112,7 @@ input,input:focus,input:hover{
                 border: none;
             }
 
+
         }
         aside{
             position: absolute;
@@ -130,6 +131,14 @@ input,input:focus,input:hover{
             height: 55px;
             border-radius: 50%;
             outline: 3px white solid;
+            &::-moz-color-swatch {
+                border-radius: 50%;
+                border: 1px solid #000000;
+            }
+            &::-webkit-color-swatch {
+                border-radius: 50%;
+                border: 1px solid #000000;
+            }
 
         }
         &::before{
@@ -161,4 +170,22 @@ input,input:focus,input:hover{
             content: "clear";
         }
     }
+    .print{
+        cursor: pointer;
+        &:hover{
+            transform: translateY(-2px);
+        }
+        &::before{
+            content: "print";
+        }
+
+    }
 }
+
+
+
+@media print {
+    #tools{
+        display: none;
+    }
+  }

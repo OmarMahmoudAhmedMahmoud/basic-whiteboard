@@ -16,9 +16,6 @@ board.draw = function(e){
     let mouseX = e.clientX ? e.clientX : e.touches[0].clientX,
         mouseY = e.clientY ? e.clientY : e.touches[0].clientY;
 
-    // board.ctx.fillStyle = board.color;
-    // board.ctx.fillRect(mouseX, mouseY, board.size, board.size)
-
     board.ctx.lineWidth = board.size;
     board.ctx.lineCap = "round";
     board.ctx.strokeStyle = board.color;
@@ -39,9 +36,6 @@ board.remove = function(e){
 }
 
 board.desid = function (e) {
-    let size ;
-
-    
     if (this.deletCheck) {
         board.remove(e)
     }else{
@@ -52,15 +46,18 @@ board.desid = function (e) {
 board.graph = function() {
     this.canvas = document.getElementById("board");
     this.ctx = this.canvas.getContext("2d");
-    window.addEventListener('resize', resizeCanvas, false);
+    // window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas() {
-
         board.canvas.width = window.innerWidth;
         board.canvas.height = window.innerHeight;
     }   
+
     resizeCanvas()
 }
 
+board.print = function() {
+    window.print()
+}
 board.events = function(){
 
     function desid() {
@@ -132,11 +129,18 @@ board.events = function(){
     
     }
 
+    function print() {
+
+        document.getElementById("icon-pr").addEventListener("click",()=>board.print())
+        
+    }
+
     desid()
     clear()
     delet()
     color()
     size()
+    print() 
 }
 
 
